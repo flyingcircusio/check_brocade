@@ -46,5 +46,4 @@ Programming Language :: Python :: 3
     include_package_data=True,
     data_files=[('', glob.glob('*.txt'))],
     zip_safe=False,
-    cmdclass={'test': PyTest},
 )

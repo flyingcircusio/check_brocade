@@ -74,10 +74,9 @@ def main():
     zone = r.find('.//clock:timezone', ns).text
     tz = pytz.timezone(zone)
     time = time.split('+')[0]
-    time = datetime.datetime.strptime(time, '%Y-%m-%dT%H:%M:%S').replace(tzinfo=tz)
-    time = time.astimezone(LOCAL_TIME)
+    time = tz.localize(datetime.datetime.strptime(time, '%Y-%m-%dT%H:%M:%S'))
 
-    now = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+    now = pytz.UTC.localize(datetime.datetime.utcnow()).astimezone(LOCAL_TIME)
     offset = abs(now - time).total_seconds()
 
     time_state = OK if offset < 5 else WARN if offset < 30 else CRIT
